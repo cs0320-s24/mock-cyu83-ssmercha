@@ -18,7 +18,16 @@ export function REPLHistory(props: REPLHistoryProps) {
           <div>
             <p>Command: {hEntry.command}</p>
             <p>Ouput:</p>
-            {hEntry.response}
+            {typeof hEntry.response === "string" ? (
+              <div>{hEntry.response}</div>
+            ) : (
+              <table>
+                {hEntry.response.map((row) => [
+                  <tr>{row.map((elt) => [<td>{elt}</td>])}</tr>,
+                ])}
+              </table>
+            )}{" "}
+            {/* TODO: if string[][], make into html table */}
           </div>
         )
       )}

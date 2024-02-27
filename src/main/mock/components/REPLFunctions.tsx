@@ -8,7 +8,7 @@ mockFileData.set("test.csv", [
 mockFileData.set("people.csv", [
   ["name", "age", "fav_color"],
   ["catherine", "19", "blue"],
-  ["sana", "19?", "green?"],
+  ["sana", "19", "green"],
 ]);
 
 export function mockViewCSV(args: Array<string>): string | string[][] {
