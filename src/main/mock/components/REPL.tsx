@@ -2,13 +2,6 @@ import { useState } from "react";
 import "../styles/main.css";
 import { REPLHistory } from "./REPLHistory";
 import { REPLInput } from "./REPLInput";
-import {
-  mockLoadCSV,
-  mode,
-  REPLFunction,
-  mockSearchCSV,
-  mockViewCSV,
-} from "./REPLFunction";
 
 /*
   You'll want to expand this component (and others) for the sprints! Remember
@@ -21,7 +14,7 @@ import {
 
 export default function REPL() {
   const [history, setHistory] = useState<history[]>([]);
-  const [modeIsBrief, setMode] = useState<boolean>(true);
+  const [modeIsBrief, setModeIsBrief] = useState<boolean>(true);
   // TODO: Add some kind of shared state that holds all the commands submitted.
   return (
     <div className="repl">
@@ -30,17 +23,12 @@ export default function REPL() {
       {/* TODO: Update your REPLHistory and REPLInput to take in new shared state as props */}
       <REPLHistory historyList={history} />
       <hr></hr>
-      <REPLFunction
-        mode={modeIsBrief}
-        setMode={setMode}
-        historyList={history}
-        setHistory={setHistory}
-      />
+      {/* <REPLFunction /> */}
       <REPLInput
         historyList={history}
         setHistory={setHistory}
-        mode={modeIsBrief}
-        setMode={setMode}
+        modeIsBrief={modeIsBrief}
+        setModeIsBrief={setModeIsBrief}
       />
     </div>
   );

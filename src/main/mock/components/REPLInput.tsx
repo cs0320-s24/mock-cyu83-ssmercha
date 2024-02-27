@@ -1,13 +1,8 @@
 import "../styles/main.css";
 import { Dispatch, SetStateAction, useState } from "react";
 import { ControlledInput } from "./ControlledInput";
-import {
-  mockLoadCSV,
-  mode,
-  REPLFunction,
-  mockSearchCSV,
-  mockViewCSV,
-} from "./REPLFunction";
+import { mockLoadCSV, mode, mockSearchCSV, mockViewCSV } from "./REPLFunctions";
+import { REPLFunction } from "./FunctionInterface";
 import { Simulate } from "react-dom/test-utils";
 import load = Simulate.load;
 // import {REPLProps} from "./PropsInterface";
@@ -17,7 +12,7 @@ interface REPLProps {
   historyList: history[];
   setHistory: Dispatch<SetStateAction<history[]>>;
   modeIsBrief: boolean;
-  setMode: Dispatch<SetStateAction<boolean>>;
+  setModeIsBrief: Dispatch<SetStateAction<boolean>>;
 }
 
 // You can use a custom interface or explicit fields or both! An alternative to the current function header might be:
@@ -28,27 +23,27 @@ export function REPLInput(props: REPLProps) {
   const [commandString, setCommandString] = useState<string>("");
   const [count, setCount] = useState<number>(0);
 
-  const functions: Map<String, REPLFunction> = new Map();
-  functions.set("load", mockLoadCSV);
-  functions.set("view", mockViewCSV);
-  functions.set("search", mockSearchCSV);
-  functions.set("mode", mode);
+  const cmdToFunc: Map<String, REPLFunction> = new Map();
+  cmdToFunc.set("load", mockLoadCSV);
+  cmdToFunc.set("view", mockViewCSV);
+  cmdToFunc.set("search", mockSearchCSV);
+  cmdToFunc.set("mode", mode);
 
   const handleSubmit = (commandString: string) => {
     setCount(count + 1); // TODO: remove
 
     const commandList = commandString.split(" ");
-    let f = functions.get(commandList[0]);
+    let f = cmdToFunc.get(commandList[0]); // commandList[0] is the command
 
     if (f != undefined) {
       // command exists
-      const response = f(props, commandList.slice(1));
+      const response = f(commandList.slice(1));
       // TODO: add history 2 ways depending on isBrief
       props.setHistory([
         ...props.historyList,
         {
           command: commandList[0],
-          isBrief: props.modeIsBrief,
+          isBrief: false, // TODO: implement mode props.modeIsBrief,
           response: response,
         },
       ]);
@@ -59,7 +54,7 @@ export function REPLInput(props: REPLProps) {
         ...props.historyList,
         {
           command: commandList[0],
-          isBrief: props.modeIsBrief,
+          isBrief: false, // TODO: implement mode props.modeIsBrief,
           response: "Error: command does not exist",
         },
       ]);
