@@ -1,8 +1,8 @@
-type history = {
-  commandInput: string[];
+interface history {
+  command: string;
   isBrief: boolean;
-  functionOutput: string[] | string[][][];
-};
+  response: string | string[][];
+}
 
 // type output = {
 //   data: string | string[][];

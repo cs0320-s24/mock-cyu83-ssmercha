@@ -1,21 +1,23 @@
 import "../styles/main.css";
 import { Dispatch, SetStateAction, useState } from "react";
 import { ControlledInput } from "./ControlledInput";
-import { loadCSV, mode, REPLFunction, search, view } from "./REPLFunction";
+import {
+  mockLoadCSV,
+  mode,
+  REPLFunction,
+  mockSearchCSV,
+  mockViewCSV,
+} from "./REPLFunction";
 import { Simulate } from "react-dom/test-utils";
 import load = Simulate.load;
 
 interface REPLInputProps {
   // TODO: Fill this with desired props... Maybe something to keep track of the submitted commands
-  history: history;
-  setHistoryInput: Dispatch<SetStateAction<history["commandInput"]>>; //this will keep track of every thing in the order that you enter
-  setHistoryOutput: Dispatch<SetStateAction<history["functionOutput"]>>;
-
-  //   args: string[];
-  //   setArgs: Dispatch<SetStateAction<string[]>>;
-  //   command: string;
-  //   setCommand: Dispatch<SetStateAction<string>>;
+  historyList: history[];
+  setHistory: Dispatch<SetStateAction<history[]>>;
+  isBriefSetting: boolean; // TODO: should this be a prop or a const? update this in REPLFunction
 }
+
 // You can use a custom interface or explicit fields or both! An alternative to the current function header might be:
 // REPLInput(history: string[], setHistory: Dispatch<SetStateAction<string[]>>)
 export function REPLInput(props: REPLInputProps) {
@@ -23,50 +25,44 @@ export function REPLInput(props: REPLInputProps) {
   // Manages the contents of the input box
   const [commandString, setCommandString] = useState<string>("");
   const [count, setCount] = useState<number>(0);
-  //   const [result, setResult] = useState<string[][]>([]);
-  //   const [args, setArgs] = useState<string[]>([]);
-  //   const [command, setCommand] = useState<string>("");
-
-  let l: REPLFunction = loadCSV;
-  let v: REPLFunction = view;
-  let s: REPLFunction = search;
-  let m: REPLFunction = mode;
 
   const functions: Map<String, REPLFunction> = new Map();
-
-  functions.set("load", l);
-  functions.set("view", v);
-  functions.set("search", s);
-  functions.set("search", m);
+  functions.set("load", mockLoadCSV);
+  functions.set("view", mockViewCSV);
+  functions.set("search", mockSearchCSV);
+  functions.set("search", mode);
 
   const handleSubmit = (commandString: string) => {
-    setCount(count + 1);
-    // props.setHistory([...props.history, commandString]);
+    setCount(count + 1); // TODO: remove
+
     const commandList = commandString.split(" ");
-    // const argsList = commandList.slice(1);
-    // setArgs(argsList);
-    // const cmd = commandList[0];
-    // setCommand(cmd);
-    // props.setHistory([...props.history, command]);
     let f = functions.get(commandList[0]);
+
     if (f != undefined) {
-      const output = f(commandList.slice(1));
-      if (typeof output === "string") {
-        props.setHistoryInput([
-          ...props.history.commandInput,
-          "" + commandString,
-        ]);
-      } else {
-        // props.setHistory([...props.history, "" + output]);
-        props.setHistoryOutput([...props.history.functionOutput, "" + output]);
-      }
-      //   props.setHistory([...props.history, "" + result]);
+      // command exists
+      const response = f(commandList.slice(1));
+      // TODO: add history 2 ways depending on isBrief
+      props.setHistory([
+        ...props.historyList,
+        {
+          command: commandList[0],
+          isBrief: false,
+          response: response,
+        },
+      ]);
     } else {
-      props.setHistoryInput([
-        ...props.history.commandInput,
-        "" + "Error: must enter a valid command",
+      // command does not exist
+      // TODO: add history 2 ways depending on isBrief
+      props.setHistory([
+        ...props.historyList,
+        {
+          command: commandList[0],
+          isBrief: false,
+          response: "Error: command does not exist",
+        },
       ]);
     }
+
     setCommandString("");
   };
 
