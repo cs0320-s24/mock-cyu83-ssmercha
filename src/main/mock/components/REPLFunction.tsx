@@ -1,14 +1,11 @@
 import { Dispatch, SetStateAction, useState } from "react";
-import { REPLProps } from "./PropsInterface";
+// import { REPLProps } from "./PropsInterface";
 
 export interface REPLFunction {
-  (props: REPLProps, args: Array<string>): string | string[][] | boolean;
+  (args: Array<string>): string | string[][];
 }
 
-export function mockViewCSV(
-  props: REPLProps,
-  args: Array<string>
-): string | string[][] | boolean {
+export function mockViewCSV(args: Array<string>): string | string[][] {
   let mockData: string[][] = [
     ["1", "2", "3"],
     ["hi", "hi", "hi"],
@@ -17,10 +14,7 @@ export function mockViewCSV(
   return mockData;
 }
 
-export function mockSearchCSV(
-  props: REPLProps,
-  args: Array<string>
-): string | string[][] | boolean {
+export function mockSearchCSV(args: Array<string>): string | string[][] {
   let mockResults: string[][] = [
     ["hi", "hi", "hi"],
     ["hello", "hello", "hello"],
@@ -28,22 +22,17 @@ export function mockSearchCSV(
   return mockResults;
 }
 
-export function mockLoadCSV(
-  props: REPLProps,
-  args: Array<string>
-): string | string[][] | boolean {
+export function mockLoadCSV(args: Array<string>): string | string[][] {
   return args.toString();
 }
 
-export function mode(
-  props: REPLProps,
-  args: Array<string>
-): string | string[][] | boolean {
+export function mode(args: Array<string>): string | string[][] {
   if (args.length == 1 && args[0] == "brief") {
-    props.setMode(true);
-    return "Mode switched to brief!";
+    // props.setModeIsBrief(true);
+    return "Mode (not) switched to brief!";
   } else if (args.length == 1 && args[0] == "verbose") {
-    return "Mode switched to verbose!";
+    // props.setModeIsBrief(false);
+    return "Mode (not) switched to verbose!";
   } else {
     return "Invalid input!";
   }

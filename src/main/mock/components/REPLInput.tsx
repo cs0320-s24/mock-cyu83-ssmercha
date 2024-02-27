@@ -17,7 +17,7 @@ interface REPLProps {
   historyList: history[];
   setHistory: Dispatch<SetStateAction<history[]>>;
   modeIsBrief: boolean;
-  setMode: Dispatch<SetStateAction<boolean>>;
+  setModeIsBrief: Dispatch<SetStateAction<boolean>>;
 }
 
 // You can use a custom interface or explicit fields or both! An alternative to the current function header might be:
@@ -42,7 +42,7 @@ export function REPLInput(props: REPLProps) {
 
     if (f != undefined) {
       // command exists
-      const response = f(props, commandList.slice(1));
+      const response = f(commandList.slice(1));
       // TODO: add history 2 ways depending on isBrief
       props.setHistory([
         ...props.historyList,
