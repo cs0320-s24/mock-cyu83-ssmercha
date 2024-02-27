@@ -3,7 +3,3 @@ interface history {
   isBrief: boolean;
   response: string | string[][]; // | boolean;
 }
-
-// type output = {
-//   data: string | string[][];
-// };

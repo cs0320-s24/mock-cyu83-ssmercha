@@ -9,8 +9,7 @@ export function REPLHistory(props: REPLHistoryProps) {
     <div className="repl-history">
       {/* This is where command history will go */}
 
-      {/* only put command if not brief (ie verbose)
-       TODO: figure out the syntax for doing this */}
+      {/* only put command if not brief (ie verbose) */}
       {props.historyList.map((hEntry) =>
         hEntry.isBrief ? (
           <div>{hEntry.command}</div>
@@ -18,7 +17,8 @@ export function REPLHistory(props: REPLHistoryProps) {
           <div>
             <p>Command: {hEntry.command}</p>
             <p>Ouput:</p>
-            {typeof hEntry.response === "string" ? (
+            {typeof hEntry.response ===
+            "string" /* display response as correct type (string/table) */ ? (
               <div>{hEntry.response}</div>
             ) : (
               <table>
@@ -26,36 +26,10 @@ export function REPLHistory(props: REPLHistoryProps) {
                   <tr>{row.map((elt) => [<td>{elt}</td>])}</tr>,
                 ])}
               </table>
-            )}{" "}
-            {/* TODO: if string[][], make into html table */}
+            )}
           </div>
         )
       )}
-      {/* {props.historyList.map((command, index) => [<p>{command.command}</p>])} */}
-
-      {/* TODO: figure out how to put response in as well, depending on type string or string[][] */}
-      {/* <p>Output: </p>
-      <table>
-        {props.historyList.map((hEntry, index) => {
-          if (typeof hEntry.response === "string") {
-            [<p>{hEntry.response}</p>];
-          } else {
-            // TODO: parse into HTML table
-          }
-        })}
-        // {
-        
-          // { if (typeof hEntry.response === "string") {
-          //   [<p>{hEntry.response}</p>];
-          // } else {
-            
-          // }
-        // }
-       
-      </table> */}
-
-      {/* old */}
-      {/* <table>{props.historyList.functionOutput.map((row) => [<tr>{row}</tr>])}</table> */}
     </div>
   );
 }
