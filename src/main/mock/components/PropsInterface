@@ -1,0 +1,16 @@
+import { Dispatch, SetStateAction, useState } from "react";
+import {
+  mockLoadCSV,
+  mode,
+  REPLFunction,
+  mockSearchCSV,
+  mockViewCSV,
+} from "./REPLFunction";
+
+interface REPLProps {
+  // TODO: Fill this with desired props... Maybe something to keep track of the submitted commands
+  modeIsBrief: boolean;
+  setMode: Dispatch<SetStateAction<boolean>>;
+  historyList: history[];
+  setHistoryList: Dispatch<SetStateAction<history[]>>;
+}

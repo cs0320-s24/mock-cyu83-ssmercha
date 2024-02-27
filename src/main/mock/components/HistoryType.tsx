@@ -1,7 +1,7 @@
 interface history {
   command: string;
   isBrief: boolean;
-  response: string | string[][];
+  response: string | string[][] | boolean;
 }
 
 // type output = {

@@ -10,17 +10,19 @@ import {
 } from "./REPLFunction";
 import { Simulate } from "react-dom/test-utils";
 import load = Simulate.load;
+// import {REPLProps} from "./PropsInterface";
 
-interface REPLInputProps {
+interface REPLProps {
   // TODO: Fill this with desired props... Maybe something to keep track of the submitted commands
   historyList: history[];
   setHistory: Dispatch<SetStateAction<history[]>>;
-  isBriefSetting: boolean; // TODO: should this be a prop or a const? update this in REPLFunction
+  modeIsBrief: boolean;
+  setMode: Dispatch<SetStateAction<boolean>>;
 }
 
 // You can use a custom interface or explicit fields or both! An alternative to the current function header might be:
 // REPLInput(history: string[], setHistory: Dispatch<SetStateAction<string[]>>)
-export function REPLInput(props: REPLInputProps) {
+export function REPLInput(props: REPLProps) {
   // Remember: let React manage state in your webapp.
   // Manages the contents of the input box
   const [commandString, setCommandString] = useState<string>("");
@@ -30,7 +32,7 @@ export function REPLInput(props: REPLInputProps) {
   functions.set("load", mockLoadCSV);
   functions.set("view", mockViewCSV);
   functions.set("search", mockSearchCSV);
-  functions.set("search", mode);
+  functions.set("mode", mode);
 
   const handleSubmit = (commandString: string) => {
     setCount(count + 1); // TODO: remove
@@ -40,13 +42,13 @@ export function REPLInput(props: REPLInputProps) {
 
     if (f != undefined) {
       // command exists
-      const response = f(commandList.slice(1));
+      const response = f(props, commandList.slice(1));
       // TODO: add history 2 ways depending on isBrief
       props.setHistory([
         ...props.historyList,
         {
           command: commandList[0],
-          isBrief: false,
+          isBrief: props.modeIsBrief,
           response: response,
         },
       ]);
@@ -57,7 +59,7 @@ export function REPLInput(props: REPLInputProps) {
         ...props.historyList,
         {
           command: commandList[0],
-          isBrief: false,
+          isBrief: props.modeIsBrief,
           response: "Error: command does not exist",
         },
       ]);
