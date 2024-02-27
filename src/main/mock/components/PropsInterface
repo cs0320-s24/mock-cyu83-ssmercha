@@ -7,6 +7,7 @@ import {
   mockViewCSV,
 } from "./REPLFunction";
 
+// WAS A POTENTIAL SOLN TO MODE THAT WE TRIED, NOT USING RN
 interface REPLProps {
   // TODO: Fill this with desired props... Maybe something to keep track of the submitted commands
   modeIsBrief: boolean;
