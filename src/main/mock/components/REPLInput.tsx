@@ -1,7 +1,13 @@
 import "../styles/main.css";
 import { Dispatch, SetStateAction, useState } from "react";
 import { ControlledInput } from "./ControlledInput";
-import { loadCSV, mode, REPLFunction, search, view } from "./REPLFunction";
+import {
+  mockLoadCSV,
+  mode,
+  REPLFunction,
+  mockSearchCSV,
+  mockViewCSV,
+} from "./REPLFunction";
 import { Simulate } from "react-dom/test-utils";
 import load = Simulate.load;
 
@@ -9,6 +15,7 @@ interface REPLInputProps {
   // TODO: Fill this with desired props... Maybe something to keep track of the submitted commands
   historyList: history[];
   setHistory: Dispatch<SetStateAction<history[]>>;
+  isBriefSetting: boolean; // TODO: should this be a prop or a const? update this in REPLFunction
 }
 
 // You can use a custom interface or explicit fields or both! An alternative to the current function header might be:
@@ -19,17 +26,11 @@ export function REPLInput(props: REPLInputProps) {
   const [commandString, setCommandString] = useState<string>("");
   const [count, setCount] = useState<number>(0);
 
-  let l: REPLFunction = loadCSV;
-  let v: REPLFunction = view;
-  let s: REPLFunction = search;
-  let m: REPLFunction = mode;
-
   const functions: Map<String, REPLFunction> = new Map();
-
-  functions.set("load", l);
-  functions.set("view", v);
-  functions.set("search", s);
-  functions.set("search", m);
+  functions.set("load", mockLoadCSV);
+  functions.set("view", mockViewCSV);
+  functions.set("search", mockSearchCSV);
+  functions.set("search", mode);
 
   const handleSubmit = (commandString: string) => {
     setCount(count + 1); // TODO: remove
