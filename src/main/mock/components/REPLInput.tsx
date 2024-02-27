@@ -48,7 +48,7 @@ export function REPLInput(props: REPLProps) {
         ...props.historyList,
         {
           command: commandList[0],
-          isBrief: props.modeIsBrief,
+          isBrief: false, // TODO: implement mode props.modeIsBrief,
           response: response,
         },
       ]);
@@ -59,7 +59,7 @@ export function REPLInput(props: REPLProps) {
         ...props.historyList,
         {
           command: commandList[0],
-          isBrief: props.modeIsBrief,
+          isBrief: false, // TODO: implement mode props.modeIsBrief,
           response: "Error: command does not exist",
         },
       ]);
