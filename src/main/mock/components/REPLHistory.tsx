@@ -12,7 +12,19 @@ export function REPLHistory(props: REPLHistoryProps) {
       {/* only put command if not brief (ie verbose) */}
       {props.historyList.map((hEntry) =>
         hEntry.isBrief ? (
-          <div>{hEntry.command}</div>
+          <div>
+            <p>Ouput:</p>
+            {typeof hEntry.response ===
+            "string" /* display response as correct type (string/table) */ ? (
+              <div>{hEntry.response}</div>
+            ) : (
+              <table>
+                {hEntry.response.map((row) => [
+                  <tr>{row.map((elt) => [<td>{elt}</td>])}</tr>,
+                ])}
+              </table>
+            )}
+          </div>
         ) : (
           <div>
             <p>Command: {hEntry.command}</p>
