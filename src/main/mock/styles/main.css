@@ -30,7 +30,10 @@ button {
   display: block;
 }
 
-.repl-history-table {
+table,
+tr,
+td {
   margin-left: auto;
   margin-right: auto;
+  border: 1px solid black;
 }

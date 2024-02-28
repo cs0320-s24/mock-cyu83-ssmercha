@@ -8,7 +8,7 @@ import load = Simulate.load;
 // import {REPLProps} from "./PropsInterface";
 
 interface REPLProps {
-  // TODO: Fill this with desired props... Maybe something to keep track of the submitted commands
+  // desired props... Maybe something to keep track of the submitted commands
   historyList: history[];
   setHistory: Dispatch<SetStateAction<history[]>>;
   modeIsBrief: boolean;
@@ -30,15 +30,12 @@ export function REPLInput(props: REPLProps) {
   cmdToFunc.set("mode", mode);
 
   const handleSubmit = (commandString: string) => {
-    setCount(count + 1); // TODO: remove
-
     const commandList = commandString.split(" ");
     let f = cmdToFunc.get(commandList[0]); // commandList[0] is the command
 
     if (f != undefined) {
       // command exists
       const response = f(props.setModeIsBrief, commandList.slice(1));
-      // TODO: add history 2 ways depending on isBrief
       props.setHistory([
         ...props.historyList,
         {
@@ -49,7 +46,6 @@ export function REPLInput(props: REPLProps) {
       ]);
     } else {
       // command does not exist
-      // TODO: add history 2 ways depending on isBrief
       props.setHistory([
         ...props.historyList,
         {

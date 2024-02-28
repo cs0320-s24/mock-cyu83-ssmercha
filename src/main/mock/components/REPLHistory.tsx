@@ -1,7 +1,7 @@
 import "../styles/main.css";
 
 interface REPLHistoryProps {
-  // TODO: Fill with some shared state tracking all the pushed commands
+  // shared state tracking all the pushed commands
   historyList: history[];
 }
 export function REPLHistory(props: REPLHistoryProps) {
@@ -18,7 +18,7 @@ export function REPLHistory(props: REPLHistoryProps) {
               <div>{hEntry.response}</div>
             ) : (
               <div>
-                <table className="repl-history-table">
+                <table>
                   {hEntry.response.map((row) => [
                     <tr>{row.map((elt) => [<td>{elt}</td>])}</tr>,
                   ])}
@@ -35,7 +35,7 @@ export function REPLHistory(props: REPLHistoryProps) {
               <div>{hEntry.response}</div>
             ) : (
               <div>
-                <table className="repl-history-table">
+                <table>
                   {hEntry.response.map((row) => [
                     <tr>{row.map((elt) => [<td>{elt}</td>])}</tr>,
                   ])}
