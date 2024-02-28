@@ -37,13 +37,13 @@ export function REPLInput(props: REPLProps) {
 
     if (f != undefined) {
       // command exists
-      const response = f(commandList.slice(1));
+      const response = f(props.setModeIsBrief, commandList.slice(1));
       // TODO: add history 2 ways depending on isBrief
       props.setHistory([
         ...props.historyList,
         {
           command: commandList[0],
-          isBrief: false, // TODO: implement mode props.modeIsBrief,
+          isBrief: props.modeIsBrief,
           response: response,
         },
       ]);
@@ -54,7 +54,7 @@ export function REPLInput(props: REPLProps) {
         ...props.historyList,
         {
           command: commandList[0],
-          isBrief: false, // TODO: implement mode props.modeIsBrief,
+          isBrief: props.modeIsBrief,
           response: "Error: command does not exist",
         },
       ]);
