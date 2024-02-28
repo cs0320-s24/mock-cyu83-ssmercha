@@ -23,7 +23,7 @@ export function REPLInput(props: REPLProps) {
   const [commandString, setCommandString] = useState<string>("");
   const [count, setCount] = useState<number>(0);
 
-  const cmdToFunc: Map<String, REPLFunction> = new Map();
+  let cmdToFunc: Map<string, REPLFunction> = new Map();
   cmdToFunc.set("load", mockLoadCSV);
   cmdToFunc.set("view", mockViewCSV);
   cmdToFunc.set("search", mockSearchCSV);
@@ -35,7 +35,7 @@ export function REPLInput(props: REPLProps) {
 
     if (f != undefined) {
       // command exists
-      const response = f(props.setModeIsBrief, commandList.slice(1));
+      const response = f(cmdToFunc, props.setModeIsBrief, commandList.slice(1));
       props.setHistory([
         ...props.historyList,
         {
