@@ -13,16 +13,17 @@ export function REPLHistory(props: REPLHistoryProps) {
       {props.historyList.map((hEntry) =>
         hEntry.isBrief ? (
           <div>
-            <p>Ouput:</p>
             {typeof hEntry.response ===
             "string" /* display response as correct type (string/table) */ ? (
               <div>{hEntry.response}</div>
             ) : (
-              <table>
-                {hEntry.response.map((row) => [
-                  <tr>{row.map((elt) => [<td>{elt}</td>])}</tr>,
-                ])}
-              </table>
+              <div>
+                <table className="repl-history-table">
+                  {hEntry.response.map((row) => [
+                    <tr>{row.map((elt) => [<td>{elt}</td>])}</tr>,
+                  ])}
+                </table>
+              </div>
             )}
           </div>
         ) : (
@@ -33,11 +34,13 @@ export function REPLHistory(props: REPLHistoryProps) {
             "string" /* display response as correct type (string/table) */ ? (
               <div>{hEntry.response}</div>
             ) : (
-              <table>
-                {hEntry.response.map((row) => [
-                  <tr>{row.map((elt) => [<td>{elt}</td>])}</tr>,
-                ])}
-              </table>
+              <div>
+                <table className="repl-history-table">
+                  {hEntry.response.map((row) => [
+                    <tr>{row.map((elt) => [<td>{elt}</td>])}</tr>,
+                  ])}
+                </table>
+              </div>
             )}
           </div>
         )
