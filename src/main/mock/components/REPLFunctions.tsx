@@ -1,4 +1,5 @@
 import { Dispatch, SetStateAction, useState } from "react";
+import { REPLFunction } from "./FunctionInterface";
 
 // create mock csv file data
 const mockFileData: Map<string, string[][]> = new Map();
@@ -29,6 +30,7 @@ mockSearchData.set(["test.csv", "name", "blah"], []);
 mockSearchData.set(["people.csv", "name", "green"], []);
 
 export function mockViewCSV(
+  cmdMap: Map<string, REPLFunction>,
   setModeIsBrief: Dispatch<SetStateAction<boolean>>,
   args: string[]
 ): string | string[][] {
@@ -61,6 +63,7 @@ function arraysEqual(a: string[], b: string[]): boolean {
 
 // enter search <column> <value>, <column> is either and index or column name
 export function mockSearchCSV(
+  cmdMap: Map<string, REPLFunction>,
   setModeIsBrief: Dispatch<SetStateAction<boolean>>,
   args: string[]
 ): string | string[][] {
@@ -112,6 +115,7 @@ export function mockSearchCSV(
 }
 
 export function mockLoadCSV(
+  cmdMap: Map<string, REPLFunction>,
   setModeIsBrief: Dispatch<SetStateAction<boolean>>,
   args: string[]
 ): string | string[][] {
@@ -132,6 +136,7 @@ export function mockLoadCSV(
 }
 
 export function mode(
+  cmdMap: Map<string, REPLFunction>,
   setModeIsBrief: Dispatch<SetStateAction<boolean>>,
   args: string[]
 ): string | string[][] {
