@@ -68,23 +68,45 @@ export function mockSearchCSV(
     // TODO: check if <column> is a required arg
     return 'Incorrect number of arguments inputted. Please input "search <column> <value>"'; // TODO: check
   }
+
   if (fileLoaded == args[0]) {
-    Array.from(mockSearchData.keys()).forEach((key) => {
-      if (arraysEqual(key, args)) {
-        let searchResults = mockSearchData.get(key);
-        if (searchResults != undefined) {
-          return searchResults;
-        } else {
-          return "Invalid search arguments!";
-        }
-        //     //   } else {
-        //     //     return "Invalid search arguments!";
-      } else {
-        return "idk what happened";
+    if (args[0] == "people.csv") {
+      if (args[1] == "age" && args[2] == "19") {
+        return [
+          ["catherine", "19", "blue"],
+          ["sana", "19", "green"],
+        ];
       }
-    });
-    // return "No mock search data";
-  } else {
+      if (args[1] == "color" && args[2] == "green") {
+        return [["sana", "19", "green"]];
+      }
+      if (args[1] == "name" && args[2] == "green") {
+        return [];
+      }
+    }
+    if (args[0] == "test.csv") {
+      if (args[1] == "name" && args[2] == "blah") {
+        return [];
+      }
+    }
+    return "Invalid search arguments/mocked search doesn't have those results!";
+  }
+  // Array.from(mockSearchData.keys()).forEach((key) => {
+  // if (arraysEqual(key, args)) {
+  // let searchResults = mockSearchData.get(key);
+  // if (searchResults != undefined) {
+  //   return searchResults;
+  // } else {
+  //   return "Invalid search arguments!";
+  // }
+  //     //   } else {
+  //     //     return "Invalid search arguments!";
+  // } else {
+  //   return "idk what happened";
+  // }
+  // });
+  // return "No mock search data";
+  else {
     return "Please load the file " + args[0] + " before searching!";
   }
 }
