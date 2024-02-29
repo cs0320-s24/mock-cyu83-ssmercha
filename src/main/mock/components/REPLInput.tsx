@@ -1,7 +1,13 @@
 import "../styles/main.css";
 import { Dispatch, SetStateAction, useState } from "react";
 import { ControlledInput } from "./ControlledInput";
-import { mockLoadCSV, mode, mockSearchCSV, mockViewCSV } from "./REPLFunctions";
+import {
+  mockLoadCSV,
+  mode,
+  mockSearchCSV,
+  mockViewCSV,
+  mockSearchCSVNew,
+} from "./REPLFunctions";
 import { REPLFunction } from "./FunctionInterface";
 import { Simulate } from "react-dom/test-utils";
 import load = Simulate.load;
