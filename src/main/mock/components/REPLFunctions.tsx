@@ -25,7 +25,7 @@ mockSearchData.set(
   ]
 );
 mockSearchData.set(["people.csv", "color", "green"], [["sana", "19", "green"]]);
-mockSearchData.set(["test.csv", "name"], []);
+mockSearchData.set(["test.csv", "name", "blah"], []);
 mockSearchData.set(["people.csv", "name", "green"], []);
 
 export function mockViewCSV(
@@ -47,6 +47,18 @@ export function mockViewCSV(
   }
 }
 
+function arraysEqual(a: string[], b: string[]): boolean {
+  if (a.length == b.length) {
+    for (let i = 0; i < a.length; i++) {
+      if (a[i] != b[i]) {
+        return false;
+      }
+    }
+    return true;
+  }
+  return false;
+}
+
 // enter search <column> <value>, <column> is either and index or column name
 export function mockSearchCSV(
   setModeIsBrief: Dispatch<SetStateAction<boolean>>,
@@ -56,14 +68,45 @@ export function mockSearchCSV(
     // TODO: check if <column> is a required arg
     return 'Incorrect number of arguments inputted. Please input "search <column> <value>"'; // TODO: check
   }
+
   if (fileLoaded == args[0]) {
-    let mockSearchResults = mockSearchData.get(args);
-    if (mockSearchResults != undefined) {
-      return mockSearchResults; // TODO: maybe print something for no results found
-    } else {
-      return [args]; // + "Invalid search arguments!"; TODO: FIX THIS
+    if (args[0] == "people.csv") {
+      if (args[1] == "age" && args[2] == "19") {
+        return [
+          ["catherine", "19", "blue"],
+          ["sana", "19", "green"],
+        ];
+      }
+      if (args[1] == "color" && args[2] == "green") {
+        return [["sana", "19", "green"]];
+      }
+      if (args[1] == "name" && args[2] == "green") {
+        return [];
+      }
     }
-  } else {
+    if (args[0] == "test.csv") {
+      if (args[1] == "name" && args[2] == "blah") {
+        return [];
+      }
+    }
+    return "Invalid search arguments/mocked search doesn't have those results!";
+  }
+  // Array.from(mockSearchData.keys()).forEach((key) => {
+  // if (arraysEqual(key, args)) {
+  // let searchResults = mockSearchData.get(key);
+  // if (searchResults != undefined) {
+  //   return searchResults;
+  // } else {
+  //   return "Invalid search arguments!";
+  // }
+  //     //   } else {
+  //     //     return "Invalid search arguments!";
+  // } else {
+  //   return "idk what happened";
+  // }
+  // });
+  // return "No mock search data";
+  else {
     return "Please load the file " + args[0] + " before searching!";
   }
 }
