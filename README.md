@@ -29,6 +29,7 @@ FunctionInterface
 - This interface defines what a function should do, and allows the user to implement whatever functions they want for the user to be able to input.
 - This allows a developer to add their own functions to let the user input.
 - This also allows us to used mocked data/search functionality, allowing us to have a functional program while the search functionality may not be connected yet.
+- This interface includes a field cmdMap, a map with Strings of command names and values of the corresponding REPLFunction. This allows developers to modify which commands they want to use by setting the value of this map in their own functions.
 
 # Errors/Bugs
 

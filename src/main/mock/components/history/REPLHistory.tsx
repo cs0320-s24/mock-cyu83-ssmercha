@@ -11,7 +11,7 @@ export function REPLHistory(props: REPLHistoryProps) {
 
       {/* only put command if not brief (ie verbose) */}
       {props.historyList.map((hEntry) =>
-        hEntry.isBrief ? (
+        hEntry.isBrief ? ( //if in brief mode
           <div>
             {typeof hEntry.response ===
             "string" /* display response as correct type (string/table) */ ? (
@@ -26,7 +26,7 @@ export function REPLHistory(props: REPLHistoryProps) {
               </div>
             )}
           </div>
-        ) : (
+        ) : ( //if in verbose moce
           <div>
             <p>Command: {hEntry.command}</p>
             <p>Output:</p>
