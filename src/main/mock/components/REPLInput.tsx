@@ -69,24 +69,24 @@ export function REPLInput(props: REPLProps) {
    * of the REPL and how they connect to each other...
    */
   return (
-    <div className="repl-input">
-      {/* I opted to use this HTML tag; you don't need to. It structures multiple input fields
+      <div className="repl-input">
+        {/* I opted to use this HTML tag; you don't need to. It structures multiple input fields
             into a single unit, which makes it easier for screenreaders to navigate. */}
-      <fieldset>
-        <legend>Enter a command:</legend>
-        <ControlledInput
-          value={commandString}
-          setValue={setCommandString}
-          ariaLabel={"Command input"}
-        />
-      </fieldset>
-      <button
-        onClick={() => {
-          handleSubmit(commandString);
-        }}
-      >
-        Submit
-      </button>
-    </div>
+        <fieldset>
+          <legend>Enter a command:</legend>
+          <ControlledInput
+              value={commandString}
+              setValue={setCommandString}
+              ariaLabel={"Command input"}
+          />
+        </fieldset>
+        <button
+            onClick={() => {
+              handleSubmit(commandString);
+            }}
+        >
+          Submit
+        </button>
+      </div>
   );
 }
