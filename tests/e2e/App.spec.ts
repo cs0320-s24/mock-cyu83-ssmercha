@@ -237,3 +237,109 @@ test("load same csv twice in a row", async ({ page }) => {
 
 //     int tableRows = await Page.Locator("//table/tbody/tr").CountAsync();
 // })
+
+
+//BELOW THIS ARE SANA'S TESTS
+
+test("can't view/search/load file that doesn't exist", async ({ page }) => {
+  await page.goto("http://localhost:8000/");
+  await page.getByLabel("Login").click();
+
+  // expect error in history after viewing
+  await page.getByLabel("Command input").fill("view no.csv");
+  await page.getByRole("button", { name: "Submit" }).click();
+
+  const output1 = await page.evaluate(() => {
+    const history = document.querySelector(".repl-history");
+    return history?.children[0]?.textContent;
+  });
+  expect(output1).toEqual("Please load the file no.csv before viewing!");
+
+  // expect error in history after searching
+  await page.getByLabel("Command input").fill("search no.csv test");
+  await page.getByRole("button", { name: "Submit" }).click();
+
+  const output2 = await page.evaluate(() => {
+    const history = document.querySelector(".repl-history");
+    return history?.children[1]?.textContent;
+  });
+  expect(output2).toEqual("Please load the file no.csv before searching!");
+
+  // expect error in history after loading
+  await page.getByLabel("Command input").fill("view no.csv");
+  await page.getByRole("button", { name: "Submit" }).click();
+
+  const output3 = await page.evaluate(() => {
+    const history = document.querySelector(".repl-history");
+    return history?.children[2]?.textContent;
+  });
+  expect(output3).toEqual("Please load the file no.csv before viewing!");
+});
+
+test("searching in a column that doesn't exist", async ({ page }) => {
+  await page.goto("http://localhost:8000/");
+  await page.getByLabel("Login").click();
+
+  // expect error in history after viewing
+  await page.getByLabel("Command input").fill("load people.csv");
+  await page.getByRole("button", { name: "Submit" }).click();
+
+  // expect error in history after searching
+  await page.getByLabel("Command input").fill("search people.csv swimming n sport");
+  await page.getByRole("button", { name: "Submit" }).click();
+
+  const output = await page.evaluate(() => {
+    const history = document.querySelector(".repl-history");
+    return history?.children[1]?.textContent;
+  });
+  expect(output).toEqual("Mock search not implemented for those arguments!");
+
+});
+
+test("switching modes", async ({ page }) => {
+  await page.goto("http://localhost:8000/");
+  await page.getByLabel("Login").click();
+
+  // expect error in history after viewing
+  await page.getByLabel("Command input").fill("load people.csv");
+  await page.getByRole("button", { name: "Submit" }).click();
+
+  const output1 = await page.evaluate(() => {
+    const history = document.querySelector(".repl-history");
+    return history?.children[0]?.textContent;
+  });
+  expect(output1).toEqual("Loaded file people.csv");
+
+  await page.getByLabel("Command input").fill("mode verbose");
+  await page.getByRole("button", { name: "Submit" }).click();
+
+  const output2 = await page.evaluate(() => {
+    const history = document.querySelector(".repl-history");
+    return history?.children[1]?.textContent;
+  });
+  expect(output2).toEqual("Mode switched to verbose!");
+
+  await page.getByLabel("Command input").fill("load people.csv");
+  await page.getByRole("button", { name: "Submit" }).click();
+
+  const output3 = await page.evaluate(() => {
+    const history = document.querySelector(".repl-history");
+    return history?.children[2]?.textContent;
+  });
+  expect(output3).toEqual("Command: loadOutput:File already loaded!");
+
+  await page.getByLabel("Command input").fill("mode brief");
+  await page.getByRole("button", { name: "Submit" }).click();
+
+  await page.getByLabel("Command input").fill("load test.csv");
+  await page.getByRole("button", { name: "Submit" }).click();
+
+  const output4 = await page.evaluate(() => {
+    const history = document.querySelector(".repl-history");
+    return history?.children[4]?.textContent;
+  });
+  expect(output4).toEqual("Loaded file test.csv");
+
+
+
+});
