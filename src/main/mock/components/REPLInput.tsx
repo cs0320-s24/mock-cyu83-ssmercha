@@ -7,8 +7,8 @@ import {
   mockSearchCSV,
   mockViewCSV,
   mockSearchCSVNew,
-} from "../functions/REPLFunctions";
-import { REPLFunction } from "../functions/FunctionInterface";
+} from "./REPLFunctions";
+import { REPLFunction } from "./FunctionInterface";
 import { Simulate } from "react-dom/test-utils";
 import load = Simulate.load;
 // import {REPLProps} from "./PropsInterface";
