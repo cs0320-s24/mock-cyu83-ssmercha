@@ -88,7 +88,7 @@ export function REPLInput(props: REPLProps) {
           handleSubmit(commandString);
         }}
       >
-        Submitted {count} times
+        Submit
       </button>
     </div>
   );

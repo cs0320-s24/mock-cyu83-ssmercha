@@ -220,20 +220,147 @@ test("load same csv twice in a row", async ({ page }) => {
   expect(output2).toEqual("File already loaded!");
 });
 
-// CURRENTLY WORKING ON:
-// test("search", async ({ page }) => {
-//     await page.goto("http://localhost:8000/");
-//     await page.getByLabel("Login").click();
+test("load multiple files: can't view first csv after switching loaded one", async ({
+  page,
+}) => {
+  await page.goto("http://localhost:8000/");
+  await page.getByLabel("Login").click();
 
-//     await page.getByLabel("Command input").fill("load test.csv");
-//     await page.getByRole("button", { name: "Submit" }).click();
+  // load 1
+  await page.getByLabel("Command input").fill("load test.csv");
+  await page.getByRole("button", { name: "Submit" }).click();
 
-//   const output1 = await page.evaluate(() => {
-//     const history = document.querySelector(".repl-history");
-//     return history?.children[0]?.textContent;
-//   });
+  // load 2
+  await page.getByLabel("Command input").fill("load people.csv");
+  await page.getByRole("button", { name: "Submit" }).click();
 
-//   expect(output1).toEqual("Loaded file test.csv");
+  const output2 = await page.evaluate(() => {
+    const history = document.querySelector(".repl-history");
+    return history?.children[1]?.textContent;
+  });
+  expect(output2).toEqual("Loaded file people.csv");
 
-//     int tableRows = await Page.Locator("//table/tbody/tr").CountAsync();
-// })
+  // try to access 1
+  await page.getByLabel("Command input").fill("view test.csv");
+  await page.getByRole("button", { name: "Submit" }).click();
+
+  const output3 = await page.evaluate(() => {
+    const history = document.querySelector(".repl-history");
+    return history?.children[2]?.textContent;
+  });
+  expect(output3).toEqual("Please load the file test.csv before viewing!");
+
+  await page.getByLabel("Command input").fill("search test.csv hi");
+  await page.getByRole("button", { name: "Submit" }).click();
+
+  const output4 = await page.evaluate(() => {
+    const history = document.querySelector(".repl-history");
+    return history?.children[3]?.textContent;
+  });
+  expect(output4).toEqual("Please load the file test.csv before searching!");
+
+  // successfully access 2
+  await page.getByLabel("Command input").fill("view people.csv");
+  await page.getByRole("button", { name: "Submit" }).click();
+
+  const output5 = await page.evaluate(() => {
+    const history = document.querySelector(".repl-history");
+    return history?.children[4]?.textContent;
+  });
+  expect(output5).toEqual("nameagecolorcatherine19bluesana19green");
+
+  await page.getByLabel("Command input").fill("search people.csv 19");
+  await page.getByRole("button", { name: "Submit" }).click();
+
+  const output6 = await page.evaluate(() => {
+    const history = document.querySelector(".repl-history");
+    return history?.children[5]?.textContent;
+  });
+  expect(output6).toEqual("catherine19bluesana19green");
+});
+
+test("search", async ({ page }) => {
+  await page.goto("http://localhost:8000/");
+  await page.getByLabel("Login").click();
+
+  await page.getByLabel("Command input").fill("load test.csv");
+  await page.getByRole("button", { name: "Submit" }).click();
+
+  // test.csv no col specifer 1 result found
+  await page.getByLabel("Command input").fill("search test.csv a");
+  await page.getByRole("button", { name: "Submit" }).click();
+
+  const output1 = await page.evaluate(() => {
+    const history = document.querySelector(".repl-history");
+    return history?.children[1]?.textContent;
+  });
+  expect(output1).toEqual("abc");
+
+  // test.csv no col specifier no results found
+  await page.getByLabel("Command input").fill("search test.csv z");
+  await page.getByRole("button", { name: "Submit" }).click();
+
+  const output2 = await page.evaluate(() => {
+    const history = document.querySelector(".repl-history");
+    return history?.children[2]?.textContent;
+  });
+  expect(output2).toEqual("");
+
+  // people.csv
+  await page.getByLabel("Command input").fill("load people.csv");
+  await page.getByRole("button", { name: "Submit" }).click();
+
+  // people.csv multiple results
+  await page.getByLabel("Command input").fill("search people.csv 19 n age");
+  await page.getByRole("button", { name: "Submit" }).click();
+
+  const output4 = await page.evaluate(() => {
+    const history = document.querySelector(".repl-history");
+    return history?.children[4]?.textContent;
+  });
+  expect(output4).toEqual("catherine19bluesana19green");
+
+  // people.csv one results
+  await page
+    .getByLabel("Command input")
+    .fill("search people.csv green n color");
+  await page.getByRole("button", { name: "Submit" }).click();
+
+  const output5 = await page.evaluate(() => {
+    const history = document.querySelector(".repl-history");
+    return history?.children[5]?.textContent;
+  });
+  expect(output5).toEqual("sana19green");
+
+  // people.csv search by index
+  await page
+    .getByLabel("Command input")
+    .fill("search people.csv catherine i 0");
+  await page.getByRole("button", { name: "Submit" }).click();
+
+  const output6 = await page.evaluate(() => {
+    const history = document.querySelector(".repl-history");
+    return history?.children[6]?.textContent;
+  });
+  expect(output6).toEqual("catherine19blue");
+
+  // people.csv no specifier
+  await page.getByLabel("Command input").fill("search people.csv 19");
+  await page.getByRole("button", { name: "Submit" }).click();
+
+  const output7 = await page.evaluate(() => {
+    const history = document.querySelector(".repl-history");
+    return history?.children[7]?.textContent;
+  });
+  expect(output7).toEqual("catherine19bluesana19green");
+
+  // people.csv no results
+  await page.getByLabel("Command input").fill("search people.csv green n name");
+  await page.getByRole("button", { name: "Submit" }).click();
+
+  const output8 = await page.evaluate(() => {
+    const history = document.querySelector(".repl-history");
+    return history?.children[8]?.textContent;
+  });
+  expect(output8).toEqual("");
+});
