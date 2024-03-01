@@ -27,7 +27,6 @@ export function REPLInput(props: REPLProps) {
   // Remember: let React manage state in your webapp.
   // Manages the contents of the input box
   const [commandString, setCommandString] = useState<string>("");
-  const [count, setCount] = useState<number>(0);
 
   let cmdToFunc: Map<string, REPLFunction> = new Map();
   cmdToFunc.set("load", mockLoadCSV);
@@ -81,8 +80,6 @@ export function REPLInput(props: REPLProps) {
           ariaLabel={"Command input"}
         />
       </fieldset>
-      {/* handleSubmit function increments count and displays the text in the button */}
-      {/* this button just counts up and pushes the contents of the input box to the history*/}
       <button
         onClick={() => {
           handleSubmit(commandString);

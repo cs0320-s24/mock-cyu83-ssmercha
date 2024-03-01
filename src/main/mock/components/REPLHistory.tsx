@@ -29,7 +29,7 @@ export function REPLHistory(props: REPLHistoryProps) {
         ) : (
           <div>
             <p>Command: {hEntry.command}</p>
-            <p>Ouput:</p>
+            <p>Output:</p>
             {typeof hEntry.response ===
             "string" /* display response as correct type (string/table) */ ? (
               <div>{hEntry.response}</div>
