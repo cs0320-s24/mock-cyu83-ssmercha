@@ -79,7 +79,7 @@ export function mockViewCSV(
   args: string[]
 ): string | string[][] {
   if (args.length != 1) {
-    return 'Incorrect number of arguments inputted. Please input "view <file_name>"';
+    return "Incorrect number of arguments inputted. Please input 'view <file_name>'";
   }
   if (fileLoaded == args[0]) {
     let data = mockFileData.get(args[0]);
@@ -116,8 +116,8 @@ export function mockSearchCSVNew(
     }
   } else {
     return (
-      'Incorrect number of arguments! Please input either "search <filename> <term>"' +
-      ' or "search <filename> <term> <colType> <colName>".'
+      "Incorrect number of arguments! Please input either 'search <filename> <term>'" +
+      " or 'search <filename> <term> <colType> <colName>'."
     );
   }
 }
@@ -193,8 +193,8 @@ export function mockSearchCSV(
     }
   } else {
     return (
-      'Incorrect number of arguments! Please input either "search <filename> <term>"' +
-      ' or "search <filename> <term> <colType> <colName>".'
+      "Incorrect number of arguments! Please input either 'search <filename> <term>'" +
+      " or 'search <filename> <term> <colType> <colName>'."
     );
   }
 }
@@ -205,7 +205,7 @@ export function mockLoadCSV(
   args: string[]
 ): string | string[][] {
   if (args.length != 1) {
-    return 'Incorrect number of arguments inputted. Please input "load <file_name>"';
+    return "Incorrect number of arguments inputted. Please input 'load <file_name>'";
   }
   if (fileLoaded == args[0]) {
     return "File already loaded!";
@@ -226,7 +226,7 @@ export function mode(
   args: string[]
 ): string | string[][] {
   if (args.length != 1) {
-    return 'Incorrect number of arguments inputted. Please input "mode <brief/verbose>"';
+    return "Incorrect number of arguments inputted. Please input 'mode <brief/verbose>'";
   }
   if (args[0] == "brief") {
     setModeIsBrief(true);
@@ -235,6 +235,6 @@ export function mode(
     setModeIsBrief(false);
     return "Mode switched to verbose!";
   } else {
-    return 'Invalid input! Please input "mode <brief/verbose>"';
+    return "Invalid input! Please input 'mode <brief/verbose>'";
   }
 }
