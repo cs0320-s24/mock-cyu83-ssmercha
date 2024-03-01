@@ -80,9 +80,9 @@ mockSearchData.set(testZ, []);
  * @param args argument to mock (filename)
  */
 export function mockViewCSV(
-    cmdMap: Map<string, REPLFunction>,
-    setModeIsBrief: Dispatch<SetStateAction<boolean>>,
-    args: string[]
+  cmdMap: Map<string, REPLFunction>,
+  setModeIsBrief: Dispatch<SetStateAction<boolean>>,
+  args: string[]
 ): string | string[][] {
   if (args.length != 1) {
     return "Incorrect number of arguments inputted. Please input 'view <file_name>'";
@@ -106,12 +106,13 @@ export function mockViewCSV(
  * @param args argument to mock (filename)
  */
 export function mockSearchCSVNew(
-    cmdMap: Map<string, REPLFunction>,
-    setModeIsBrief: Dispatch<SetStateAction<boolean>>,
-    args: string[]
+  cmdMap: Map<string, REPLFunction>,
+  setModeIsBrief: Dispatch<SetStateAction<boolean>>,
+  args: string[]
 ): string | string[][] {
   if (args.length == 2 || args.length == 4) {
-    if (fileLoaded != args[0]) { //if the file hasn't been loaded
+    if (fileLoaded != args[0]) {
+      //if the file hasn't been loaded
       return "Please load the file " + args[0] + " before searching!";
     }
 
@@ -121,7 +122,8 @@ export function mockSearchCSVNew(
     } else {
       //get results from mocked data
       const results = mockSearchData.get(real_args);
-      if (results == undefined) { //if results are undefined
+      if (results == undefined) {
+        //if results are undefined
         return "no";
       } else {
         return results; //return results
@@ -129,8 +131,8 @@ export function mockSearchCSVNew(
     }
   } else {
     return (
-        "Incorrect number of arguments! Please input either 'search <filename> <term>'" +
-        " or 'search <filename> <term> <colType> <colName>'."
+      "Incorrect number of arguments! Please input either 'search <filename> <term>'" +
+      " or 'search <filename> <term> <colType> <colName>'."
     );
   }
 }
@@ -142,12 +144,13 @@ export function mockSearchCSVNew(
  * @param args argument to mock (filename)
  */
 export function mockSearchCSV(
-    cmdMap: Map<string, REPLFunction>,
-    setModeIsBrief: Dispatch<SetStateAction<boolean>>,
-    args: string[]
+  cmdMap: Map<string, REPLFunction>,
+  setModeIsBrief: Dispatch<SetStateAction<boolean>>,
+  args: string[]
 ): string | string[][] {
   if (args.length == 2) {
-    if (fileLoaded != args[0]) { //if the file hasn't been loaded
+    if (fileLoaded != args[0]) {
+      //if the file hasn't been loaded
       return "Please load the file " + args[0] + " before searching!";
     }
     //returning mocked results
@@ -169,41 +172,41 @@ export function mockSearchCSV(
     }
     //checking more mocked searches
     if (
-        args[0] == "people.csv" &&
-        args[1] == "19" &&
-        args[2] == "n" &&
-        args[3] == "age"
+      args[0] == "people.csv" &&
+      args[1] == "19" &&
+      args[2] == "n" &&
+      args[3] == "age"
     ) {
       return [
         ["catherine", "19", "blue"],
         ["sana", "19", "green"],
       ];
     } else if (
-        args[0] == "people.csv" &&
-        args[1] == "green" &&
-        args[2] == "n" &&
-        args[3] == "color"
+      args[0] == "people.csv" &&
+      args[1] == "green" &&
+      args[2] == "n" &&
+      args[3] == "color"
     ) {
       return [["sana", "19", "green"]];
     } else if (
-        args[0] == "test.csv" &&
-        args[1] == "x" &&
-        args[2] == "n" &&
-        args[3] == "name"
+      args[0] == "test.csv" &&
+      args[1] == "x" &&
+      args[2] == "n" &&
+      args[3] == "name"
     ) {
       return [];
     } else if (
-        args[0] == "people.csv" &&
-        args[1] == "green" &&
-        args[2] == "n" &&
-        args[3] == "name"
+      args[0] == "people.csv" &&
+      args[1] == "green" &&
+      args[2] == "n" &&
+      args[3] == "name"
     ) {
       return [];
     } else if (
-        args[0] == "people.csv" &&
-        args[1] == "catherine" &&
-        args[2] == "i" &&
-        args[3] == "0"
+      args[0] == "people.csv" &&
+      args[1] == "catherine" &&
+      args[2] == "i" &&
+      args[3] == "0"
     ) {
       return [["catherine", "19", "blue"]];
     } else {
@@ -211,8 +214,8 @@ export function mockSearchCSV(
     }
   } else {
     return (
-        "Incorrect number of arguments! Please input either 'search <filename> <term>'" +
-        " or 'search <filename> <term> <colType> <colName>'."
+      "Incorrect number of arguments! Please input either 'search <filename> <term>'" +
+      " or 'search <filename> <term> <colType> <colName>'."
     );
   }
 }
@@ -224,9 +227,9 @@ export function mockSearchCSV(
  * @param args argument to mock (filename)
  */
 export function mockLoadCSV(
-    cmdMap: Map<string, REPLFunction>,
-    setModeIsBrief: Dispatch<SetStateAction<boolean>>,
-    args: string[]
+  cmdMap: Map<string, REPLFunction>,
+  setModeIsBrief: Dispatch<SetStateAction<boolean>>,
+  args: string[]
 ): string | string[][] {
   if (args.length != 1) {
     return "Incorrect number of arguments inputted. Please input 'load <file_name>'";
@@ -250,11 +253,12 @@ export function mockLoadCSV(
  * @param args argument to mock (filename)
  */
 export function mode(
-    cmdMap: Map<string, REPLFunction>,
-    setModeIsBrief: Dispatch<SetStateAction<boolean>>,
-    args: string[]
+  cmdMap: Map<string, REPLFunction>,
+  setModeIsBrief: Dispatch<SetStateAction<boolean>>,
+  args: string[]
 ): string | string[][] {
-  if (args.length != 1) { //incorrect number of arguments
+  if (args.length != 1) {
+    //incorrect number of arguments
     return "Incorrect number of arguments inputted. Please input 'mode <brief/verbose>'";
   }
   if (args[0] == "brief") {

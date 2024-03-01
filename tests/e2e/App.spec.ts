@@ -365,7 +365,6 @@ test("search", async ({ page }) => {
   expect(output8).toEqual("");
 });
 
-
 //BELOW THIS ARE SANA'S TESTS
 
 test("can't view/search/load file that doesn't exist", async ({ page }) => {
@@ -412,7 +411,9 @@ test("searching in a column that doesn't exist", async ({ page }) => {
   await page.getByRole("button", { name: "Submit" }).click();
 
   // expect error in history after searching
-  await page.getByLabel("Command input").fill("search people.csv swimming n sport");
+  await page
+    .getByLabel("Command input")
+    .fill("search people.csv swimming n sport");
   await page.getByRole("button", { name: "Submit" }).click();
 
   const output = await page.evaluate(() => {
@@ -420,7 +421,6 @@ test("searching in a column that doesn't exist", async ({ page }) => {
     return history?.children[1]?.textContent;
   });
   expect(output).toEqual("Mock search not implemented for those arguments!");
-
 });
 
 test("switching modes", async ({ page }) => {
@@ -466,20 +466,21 @@ test("switching modes", async ({ page }) => {
     return history?.children[4]?.textContent;
   });
   expect(output4).toEqual("Loaded file test.csv");
+});
 
-  test("can search before view", async ({ page }) =>
-  {   await page.goto("http://localhost:8000/");
-    await page.getByLabel("Login").click();
-    // load
-    await page.getByLabel("Command input").fill("load test.csv");
-    await page.getByRole("button", { name: "Submit" }).click();
+test("can search before view", async ({ page }) => {
+  await page.goto("http://localhost:8000/");
+  await page.getByLabel("Login").click();
+  // load
+  await page.getByLabel("Command input").fill("load test.csv");
+  await page.getByRole("button", { name: "Submit" }).click();
 
-    // can search correctly
-    await page.getByLabel("Command input").fill("search test.csv a");
-    await page.getByRole("button", { name: "Submit" }).click();
-    const output = await page.evaluate(() => {
-      const history = document.querySelector(".repl-history");
-      return history?.children[1]?.textContent;   });
-    expect(output).toEqual("abc"); });
-
+  // can search correctly
+  await page.getByLabel("Command input").fill("search test.csv a");
+  await page.getByRole("button", { name: "Submit" }).click();
+  const output = await page.evaluate(() => {
+    const history = document.querySelector(".repl-history");
+    return history?.children[1]?.textContent;
+  });
+  expect(output).toEqual("abc");
 });

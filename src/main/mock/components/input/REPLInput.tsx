@@ -1,4 +1,4 @@
-import "../styles/main.css";
+import "../../styles/main.css";
 import { Dispatch, SetStateAction, useState } from "react";
 import { ControlledInput } from "./ControlledInput";
 import {
@@ -7,8 +7,8 @@ import {
   mockSearchCSV,
   mockViewCSV,
   mockSearchCSVNew,
-} from "./REPLFunctions";
-import { REPLFunction } from "./FunctionInterface";
+} from "../function/REPLFunctions";
+import { REPLFunction } from "../function/FunctionInterface";
 import { Simulate } from "react-dom/test-utils";
 import load = Simulate.load;
 // import {REPLProps} from "./PropsInterface";
@@ -69,24 +69,24 @@ export function REPLInput(props: REPLProps) {
    * of the REPL and how they connect to each other...
    */
   return (
-      <div className="repl-input">
-        {/* I opted to use this HTML tag; you don't need to. It structures multiple input fields
+    <div className="repl-input">
+      {/* I opted to use this HTML tag; you don't need to. It structures multiple input fields
             into a single unit, which makes it easier for screenreaders to navigate. */}
-        <fieldset>
-          <legend>Enter a command:</legend>
-          <ControlledInput
-              value={commandString}
-              setValue={setCommandString}
-              ariaLabel={"Command input"}
-          />
-        </fieldset>
-        <button
-            onClick={() => {
-              handleSubmit(commandString);
-            }}
-        >
-          Submit
-        </button>
-      </div>
+      <fieldset>
+        <legend>Enter a command:</legend>
+        <ControlledInput
+          value={commandString}
+          setValue={setCommandString}
+          ariaLabel={"Command input"}
+        />
+      </fieldset>
+      <button
+        onClick={() => {
+          handleSubmit(commandString);
+        }}
+      >
+        Submit
+      </button>
+    </div>
   );
 }
